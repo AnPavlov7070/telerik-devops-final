@@ -1,0 +1,11 @@
+{
+  "name": "hello-node-server",
+  "version": "1.0.0",
+  "description": "A simple Node.js HTTP server running in Docker",
+  "main": "app-node.js",
+  "scripts": {
+    "start": "node app-node.js"
+  },
+  "author": "Andrey Pavlov",
+  "license": "MIT"
+}
