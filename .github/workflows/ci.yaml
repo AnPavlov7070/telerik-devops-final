@@ -19,7 +19,7 @@ jobs:
       run: docker build app -f app/Dockerfile --tag redzek/nodeapp:v1
     
     - name: Login to Docker
-      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ vars.DOCKERHUB_USERNAME }}" --password-stdin
+      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
     
     - name: Push the image
       run: docker push redzek/nodeapp:v1
