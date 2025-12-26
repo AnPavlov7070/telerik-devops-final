@@ -1,1 +1,31 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "feature" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Checkout Code
+      uses: actions/checkout@v4
+    
+    - name: Build the Docker image
+      run: docker build app -f app/Dockerfile --tag redzek/nodeapp:v1
+    
+    - name: Login to Docker
+      run: echo "${{ secrets.DOCKERHUB_USERNAME }}" | docker login -u "${{ secrets.DOCKERHUB_PASSWORD }}$" --password-stdin
+    
+    - name: Push the image
+      run: docker push redzek/nodeapp:v1
+
+      
+  
 
