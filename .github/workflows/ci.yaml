@@ -27,6 +27,20 @@ jobs:
     - name: Push the image
       run: docker push redzek/nodeapp:v1
 
-      
-  
 
+  scan: 
+    
+    name: gitleaks
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - uses: zricethezav/gitleaks-action@v2.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+    
