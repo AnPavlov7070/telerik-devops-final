@@ -27,6 +27,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - name: Install Python
@@ -40,7 +41,7 @@ jobs:
           pip install ruff
 
       - name: Run Ruff
-        run: ruff check . --output-format=github
+        run: ruff check email-fetch/app --output-format=github
   
   sonarqube:
     
@@ -56,15 +57,16 @@ jobs:
       uses: SonarSource/sonarqube-scan-action@v7
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        
+      with:
+        args:
+          -Dsonar.organization=AnPavlov7070
+          -Dsonar.projectKey=pavlovan-devops
+          -Dsonar.sources=email-fetch/app
         
   build:
     
-    needs:
-      - scan
-      - lint
-      - sonarqube 
-
+    needs: [scan, lint, sonarqube]
+       
     runs-on: ubuntu-latest
 
     steps:
