@@ -56,12 +56,7 @@ jobs:
     - name: SonarCloud Scan
       uses: SonarSource/sonarqube-scan-action@v7
       env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args:
-          -Dsonar.organization=AnPavlov7070
-          -Dsonar.projectKey=AnPavlov7070_telerik-devops-final
-          -Dsonar.sources=email-fetch/app
+        SONAR_TOKEN: ${{ secrets.SONAR_KEY }}
         
   build:
     
