@@ -60,7 +60,7 @@ jobs:
       with:
         args:
           -Dsonar.organization=AnPavlov7070
-          -Dsonar.projectKey=pavlovan-devops
+          -Dsonar.projectKey=AnPavlov7070_telerik-devops-final
           -Dsonar.sources=email-fetch/app
         
   build:
