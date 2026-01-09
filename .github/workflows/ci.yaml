@@ -27,7 +27,6 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - name: Install Python
@@ -57,10 +56,15 @@ jobs:
       uses: SonarSource/sonarqube-scan-action@v7
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_KEY }}
+      with:
+        projectBaseDir: email-fetch/app
+        args:
+          -Dsonar.organization=pavlovan-devops
+          -Dsonar.projectKey=AnPavlov7070_telerik-devops-final
         
   build:
     
-    needs: [scan, lint, sonarqube]
+    needs: [scan, sonarqube]
        
     runs-on: ubuntu-latest
 
