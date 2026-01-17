@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://ghttps://github.com/AnPavlov7070/telerik-devops-final/tree/main/deploy/k8s
+    repoURL: https://ghttps://github.com/AnPavlov7070/telerik-devops-final
     targetRevision: HEAD
     path: app
   destination:
