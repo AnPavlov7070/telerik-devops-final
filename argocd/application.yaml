@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://ghttps://github.com/AnPavlov7070/telerik-devops-final
+    repoURL: https://github.com/AnPavlov7070/telerik-devops-final
     targetRevision: HEAD
-    path: app
+    path: deploy/k8s
   destination:
     server: https://kubernetes.default.svc
     namespace: default
