@@ -1,0 +1,13 @@
+title = "Gitleaks config"
+
+[allowlist]
+description = "Allow SonarCloud identifiers in CI workflow (not secrets)"
+paths = [
+  ".github/workflows/ci.yaml",
+]
+
+regexes = [
+  "-Dsonar.organization=pavlovan-devops",
+  "-Dsonar.projectKey=AnPavlov7070_telerik-devops-final",
+  "-Dsonar.sources=email-fetch/app",
+]

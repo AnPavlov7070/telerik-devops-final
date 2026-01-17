@@ -1,8 +1,5 @@
 const { createServer } = require('node:http');
 
-// ❌ INTENTIONAL HARDCODED SECRET (for Gitleaks testing only)
-const PASSWORD = "SuperSecretPassword1234!";
-
 const hostname = '0.0.0.0';
 const port = Number(process.env.PORT) || 8000;
 
