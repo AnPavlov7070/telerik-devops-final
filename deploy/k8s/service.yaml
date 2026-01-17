@@ -6,7 +6,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: fastapi
+    app: fastapi-app
   ports:
   - port: 80
     targetPort: 80
