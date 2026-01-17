@@ -1,1 +1,27 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: Fast Container
+        image: redzek/fastimage:v1
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
