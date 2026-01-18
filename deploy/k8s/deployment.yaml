@@ -17,7 +17,7 @@ spec:
       - name: fastcontainer
         image: redzek/fastimage:v1
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         resources:
           requests:
             memory: "64Mi"
