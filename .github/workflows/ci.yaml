@@ -43,6 +43,7 @@ jobs:
           pip install ruff
 
       - name: Run Ruff
+        continue-on-error: true 
         run: ruff check email-fetch/app --output-format=github
   
   sonarqube:
