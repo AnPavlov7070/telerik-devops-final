@@ -76,14 +76,17 @@ jobs:
     
     - name: Checkout Code
       uses: actions/checkout@v4
+
+    - name: Set short SHA tag
+      run: echo "IMAGE_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
     
     - name: Build the Docker image
-      run: docker build -f email-fetch/Dockerfile --tag redzek/fastimage:${GITHUB_SHA::7} email-fetch
+      run: docker build -f email-fetch/Dockerfile --tag redzek/fastimage:$IMAGE_TAG email-fetch
     
     - name: Trivy scan
       uses: aquasecurity/trivy-action@0.20.0
       with:
-        image-ref: redzek/fastimage:${GITHUB_SHA::7}
+        image-ref: redzek/fastimage:${{ env.IMAGE_TAG }}
         format: table
         severity: CRITICAL,HIGH
         ignore-unfixed: true
@@ -96,12 +99,12 @@ jobs:
          password: ${{ secrets.DOCKER_TOKEN }}
     
     - name: Push the image
-      run: docker push redzek/fastimage:${GITHUB_SHA::7}
+      run: docker push redzek/fastimage:$IMAGE_TAG
 
     - name: Update deployment.yaml image tag to SHA
       if: github.ref == 'refs/heads/main'
       run: |
-        sed -i.bak "s|image: redzek/fastimage:.*|image: redzek/fastimage:${GITHUB_SHA::7}|g" deploy/k8s/deployment.yaml
+        sed -i.bak "s|image: redzek/fastimage:.*|image: redzek/fastimage::$IMAGE_TAG|g" deploy/k8s/deployment.yaml
         rm -f deploy/k8s/deployment.yaml.bak
 
     - name: Commit and push manifest update
@@ -110,7 +113,7 @@ jobs:
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
         git add deploy/k8s/deployment.yaml
-        git diff --staged --quiet || git commit -m "chore: deploy image ${GITHUB_SHA::7} [skip ci]"
+        git diff --staged --quiet || git commit -m "chore: deploy image ${{ env.IMAGE_TAG }} [skip ci]"
         git push
 
 
