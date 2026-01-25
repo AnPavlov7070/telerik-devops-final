@@ -104,7 +104,7 @@ jobs:
     - name: Update deployment.yaml image tag to SHA
       if: github.ref == 'refs/heads/main'
       run: |
-        sed -i.bak "s|image: redzek/fastimage:.*|image: redzek/fastimage::$IMAGE_TAG|g" deploy/k8s/deployment.yaml
+        sed -i.bak "s|image: redzek/fastimage:.*|image: redzek/fastimage:$IMAGE_TAG|g" deploy/k8s/deployment.yaml
         rm -f deploy/k8s/deployment.yaml.bak
 
     - name: Commit and push manifest update
