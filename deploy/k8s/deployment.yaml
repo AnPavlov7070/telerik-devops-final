@@ -15,7 +15,15 @@ spec:
     spec:
       containers:
       - name: fastcontainer
+<<<<<<< HEAD
         image: redzek/fastimage:CI_MANAGED
+=======
+<<<<<<< HEAD
+        image: redzek/fastimage:e50e1ad
+=======
+        image: redzek/fastimage:e50e1ad
+>>>>>>> 537be8eb2c9bcab7c8cadadeda8668fdece94224
+>>>>>>> 797a826a4a4fa482a5d80596bb6e1f93e3d0ade5
         ports:
         - containerPort: 8080
         resources:
