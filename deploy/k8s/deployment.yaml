@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastapi-app
-  namespace: default
+  namespace: fastapi
 spec:
   replicas: 2
   selector:
