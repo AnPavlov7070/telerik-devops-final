@@ -22,7 +22,7 @@ The application itself is intentionally minimal so the main focus stays on the D
 
 ⸻
 
-Tools Used:
+Tools Used
 	•	GitHub – source code and Git as a source of truth
 	•	GitHub Actions – CI pipeline
 	•	Gitleaks – secret scanning
@@ -43,8 +43,7 @@ Continuous Integration (CI)
 The CI pipeline is implemented with GitHub Actions and runs on pushes to the main branch.
 
 Why only on main?
-
-•  The pipeline runs only on the main branch to ensure that only reviewed and merged code is built, scanned, and deployed, which simplifies the workflow for demo purposes.
+	•	The pipeline runs only on the main branch to ensure that only reviewed and merged code is built, scanned, and deployed, which simplifies the workflow for demo purposes.
 
 CI responsibilities
 
@@ -68,7 +67,7 @@ Docker images are tagged using the Git commit SHA.
 Each CI run builds an image with a unique tag based on the commit that triggered the pipeline.
 
 This ensures that:
-	•	every image is immutable - once it's created it can't be modified, new image has to be created.
+	•	every image is immutable — once it’s created it cannot be modified
 	•	each deployment is traceable to a specific commit
 	•	no image tag is ever overwritten
 	•	the latest tag is avoided on purpose
@@ -92,7 +91,7 @@ This step is critical because it connects CI to CD in a GitOps-friendly way.
 
 Continuous Deployment (CD) with GitOps
 
-Deployment is handled by Argo CD using the GitOps model.
+Deployment is handled by Argo CD using the GitOps model:
 	•	Git defines the desired Kubernetes state
 	•	Argo CD watches the repository for changes
 	•	When deployment.yaml changes, Argo CD deploys the new version automatically
@@ -104,8 +103,8 @@ Argo CD is the only component that applies changes to the cluster.
 
 Kubernetes Deployment
 
-The application is deployed as a Kubernetes Deployment with multiple replicas.
-	•	Multiple replicas demonstrate availability
+The application is deployed as a Kubernetes Deployment with multiple replicas:
+	•	multiple replicas demonstrate availability
 	•	Kubernetes Services load-balance traffic
 	•	CPU and memory requests/limits are defined
 
@@ -115,10 +114,10 @@ This setup reflects common production Kubernetes practices.
 
 Health Checks
 
-The application exposes a /health endpoint.
-	•	Used for Kubernetes liveness and readiness checks
-	•	Returns a simple success response
-	•	Provides a binary healthy / unhealthy signal
+The application exposes a /health endpoint:
+	•	used for Kubernetes liveness and readiness checks
+	•	returns a simple success response
+	•	provides a binary healthy / unhealthy signal
 
 The /health endpoint is not a monitoring solution.
 
@@ -139,33 +138,29 @@ This allows checking whether the application is running correctly and consuming 
 
 CI Execution Environment
 
-The CI pipeline runs on ephemeral GitHub-hosted runners using ubuntu-latest.
-	•	Runners are temporary and destroyed after each run
-	•	They are not production environments
-	•	Strict immutability is enforced on application images, not on CI runners
+The CI pipeline runs on ephemeral GitHub-hosted runners using ubuntu-latest:
+	•	runners are temporary and destroyed after each run
+	•	they are not production environments
+	•	strict immutability is enforced on application images, not on CI runners
 
 ⸻
 
 Scope and Limitations
 
 The following items were intentionally left out to keep the project focused and understandable and are considered next logical steps:
-	•	Multiple environments (dev / staging / prod) – The project uses a single environment to reduce configuration complexity and keep the GitOps flow easy to demonstrate. Introducing multiple environments would require environment overlays and promotion workflows, which were out of scope for this demo.
-	•	Application-level Prometheus metrics (/metrics) – Only infrastructure-level metrics are collected to demonstrate basic observability. Exposing detailed application metrics would require additional instrumentation in the application code.
-	•	Progressive delivery mechanisms (canary or blue-green) – The deployment uses a standard Kubernetes Deployment for simplicity. Progressive delivery would require additional controllers and traffic management, which was intentionally avoided.
-	•	Infrastructure provisioning with Terraform – The Kubernetes cluster and supporting tools are assumed to exist. The focus of this project is application delivery, not infrastructure creation.
-	•	Advanced secret management solutions – The application does not consume runtime secrets. Secret scanning is demonstrated, while runtime secret injection was left out to avoid unnecessary complexity.
-	•	Alerting and SLO definitions – Metrics are visualized but not coupled with alerts. Alerting and SLOs are typically introduced once reliability objectives are defined.
-	•	Automated image promotion between environments – Images are rebuilt per commit instead of promoted across environments, which simplifies the delivery flow for demonstration purposes.
-	•	Production-grade access control and RBAC hardening – Default access settings are used to keep the setup approachable and focused on CI/CD concepts.
+	•	Multiple environments (dev / staging / prod) – A single environment is used to reduce configuration complexity and keep the GitOps flow easy to demonstrate.
+	•	Application-level Prometheus metrics (/metrics) – Only infrastructure-level metrics are collected to demonstrate basic observability.
+	•	Progressive delivery mechanisms (canary or blue-green) – A standard Kubernetes Deployment is used for simplicity.
+	•	Advanced secret management solutions – The application does not consume runtime secrets; only secret scanning is demonstrated.
+	•	Alerting and SLO definitions – Metrics are visualized but not coupled with alerts.
 
 ⸻
 
 Future Improvements
-
-    •   keep a cleaner git commit history
-    •   enable CI on pull requests to validate code changes before they are merged into the main branch
-    •   introduce Helm or Kustomize if project grows to multiple environmets
-    •   change docker image versioning from SHA to semantic for better readability
+	•	keep a cleaner git commit history
+	•	enable CI on pull requests to validate code changes before they are merged into the main branch
+	•	introduce Helm or Kustomize if the project grows to multiple environments
+	•	change Docker image versioning from Git SHA to semantic versioning for better readability
 
 ⸻
 
