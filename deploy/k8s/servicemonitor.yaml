@@ -3,6 +3,8 @@ kind: ServiceMonitor
 metadata:
   name: fastapi-servicemonitor
   namespace: monitoring
+  labels:
+    release: kube-prometheus-stack  #for prometheus to pick it up
 spec:
   namespaceSelector:
     matchNames:

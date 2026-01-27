@@ -3,11 +3,14 @@ kind: Service
 metadata:
   name: fast-service
   namespace: fastapi
+  labels: 
+    app: fastapi-app #for servicemonitor to match the label
 spec:
   type: NodePort
   selector:
     app: fastapi-app
   ports:
-  - port: 80
-    targetPort: 8080
-    nodePort: 30080
+    - name: http    #for servicemonitor to match
+      port: 80
+      targetPort: 8080
+      nodePort: 30080
