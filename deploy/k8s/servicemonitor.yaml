@@ -5,6 +5,7 @@ metadata:
   namespace: monitoring
   labels:
     release: kube-prometheus-stack  #for prometheus to pick it up
+    app.kubernetes.io/instance: kube-prometheus-stack
 spec:
   namespaceSelector:
     matchNames:
