@@ -11,7 +11,7 @@ spec:
     path: deploy/k8s
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: fastapi
   syncPolicy:
     automated:
       prune: true
