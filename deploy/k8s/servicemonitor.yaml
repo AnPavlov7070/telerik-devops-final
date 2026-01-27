@@ -2,10 +2,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: fastapi-servicemonitor
-  namespace: fastapi
+  namespace: monitoring
   labels:
-    release: kube-prometheus-stack
+    release: monitoring  #for prometheus to pick it up
+    app.kubernetes.io/instance: kube-prometheus-stack
 spec:
+  namespaceSelector:
+    matchNames:
+      - fastapi
   selector:
     matchLabels:
       app: fastapi-app
