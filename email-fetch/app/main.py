@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.config import Settings, get_settings
 from app.imap_client import ImapService, ImapUpstreamError
@@ -19,6 +20,13 @@ logging.basicConfig(
 
 app = FastAPI(title="Email Fetch Service", version="1.0.0")
 
+# Health check
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+# Prometheus metrics
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
 @app.post("/fetch", response_model=FetchResponse)
 def fetch_emails(req: FetchRequest):
@@ -113,4 +121,3 @@ def fetch_emails(req: FetchRequest):
         logger.exception("internal_error")
         raise HTTPException(status_code=500, detail="internal_server_error")
     
-    #test1
