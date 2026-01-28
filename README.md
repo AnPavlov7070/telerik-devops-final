@@ -10,6 +10,22 @@ The project focuses on automation, correctness, and traceability, not applicatio
 
 ⸻
 
+Solution Shape (T-shaped / E-shaped)
+
+The solution is designed as a T-shaped DevOps implementation.
+•	Horizontal (breadth):
+The project covers the full software delivery lifecycle end-to-end — source control, CI, security scanning, image build, registry, GitOps deployment, Kubernetes runtime, and observability.
+•	Vertical (depth):
+A deep dive is implemented in GitOps-based deployment and immutable image versioning, including:
+	•	Git as the single source of truth
+	•	Automatic update of Kubernetes manifests from CI
+	•	Argo CD reconciliation
+	•	Immutable Docker images tagged with Git SHA
+
+This structure demonstrates both broad understanding of the DevOps toolchain and deeper expertise in selected areas.
+
+⸻
+
 Application
 
 The application is a simple FastAPI backend service.
@@ -17,6 +33,7 @@ The application is a simple FastAPI backend service.
 It exposes:
 	•	a basic API
 	•	a /health endpoint used for Kubernetes health checks
+	•   a /metrics endpoint for metrics check
 
 The application itself is intentionally minimal so the main focus stays on the DevOps workflow.
 
@@ -33,8 +50,7 @@ Tools Used
 	•	Docker Hub – container image registry
 	•	Kubernetes – application runtime
 	•	Argo CD – GitOps continuous deployment
-	•	Prometheus – metrics collection
-	•	Grafana – metrics visualization
+	•	Prometheus – metrics exposition format as /metrics endpoint
 
 ⸻
 
@@ -125,14 +141,18 @@ The /health endpoint is not a monitoring solution.
 
 Observability
 
-Basic observability is implemented using Prometheus and Grafana.
+Basic observability is implemented by exposing application and runtime metrics via a /metrics endpoint.
 
-The project monitors:
-	•	pod availability
-	•	CPU usage
-	•	memory usage
+The application exposes metrics in a Prometheus-compatible format, which allows monitoring systems to scrape and collect data about the service.
 
-This allows checking whether the application is running correctly and consuming expected resources.
+The /metrics endpoint is exposed at application level using prometheus-fastapi-instrumentator, which automatically collects HTTP and process metrics and makes them available for Prometheus scraping.
+
+The exposed metrics include:
+	•	application HTTP request metrics
+	•	process-level metrics (CPU, memory)
+	•	runtime behavior of the service
+
+This setup demonstrates how an application can be made observable and ready for monitoring integrations, even if a full Prometheus and Grafana stack is not fully configured in this project.
 
 ⸻
 
@@ -161,6 +181,7 @@ Future Improvements
 	•	enable CI on pull requests to validate code changes before they are merged into the main branch
 	•	introduce Helm or Kustomize if the project grows to multiple environments
 	•	change Docker image versioning from Git SHA to semantic versioning for better readability
+	•   more "as-code" setups like dashboard-configmap.yaml for grafana dashboard
 
 ⸻
 
